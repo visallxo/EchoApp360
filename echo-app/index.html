@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Echo Apps</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+        background: linear-gradient(#6b8e23, #6b8e23, #6b8e23);
+        min-height: 100vh;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative; 
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 150px;
+        }
+            .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            width: 60%;
+            max-width: 600px;
+            margin-top: 100px;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @media (max-width: 768px) {
+            body {
+                padding: 0 15px; /* Padding for smaller screens */
+            }
+            .logo {
+                width: 120px;
+                top: 10px;
+                left: 10px;
+            }
+            .container {
+                width: 100%;
+                margin-top: 80px; /* Adjust gap for smaller screens */
+            }
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .modal-body {
+            text-align: center;
+        }
+        .btn-close {
+            display: none;
+        }
+        .btn-red {
+            background-color: red;
+            color: white;
+        }
+        .center-btn {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .modal-content {
+            border: none;
+        }
+        .modal-dialog {
+            max-width: 400px;
+        }
+        h3 {
+            font-size: 1.25rem;
+            margin-top: 20px;
+            margin-bottom: 25px;
+        }
+        .form-label {
+            font-weight: bold; /* Make form labels bold */
+        }
+        .form-check-label {
+            font-weight: bold; /* Bold text for checkbox label */
+            font-size: 0.9rem;
+        }
+        .btn-primary {
+            font-weight: bold; /* Make button text bold */
+        }
+        .footer {
+            width: 100%;
+            /* background-color: #343a40; */
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: absolute;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo -->
+    <img src="assets/echoapps-logo.png" alt="EchoApps360 Logo" class="logo">
+
+    <!-- Form Container -->
+    <div class="container">
+        <h1 class="text-center">Welcome to EchoApps360</h1>
+        <h3 class="text-center">Kindly complete the form to instantly access the whitepaper</h3>
+        <form id="whitepaperForm">
+            <div class="mb-3">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Enter your first name" required>
+            </div>
+            <div class="mb-3">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Enter your last name" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+            </div>
+            <div class="mb-3">
+                <label for="countryCode" class="form-label">Country Code</label>
+                <input type="text" id="countryCode" name="countryCode" class="form-control" placeholder="Enter your country code (e.g., +1)" required>
+            </div>
+            <div class="mb-3">
+                <label for="phoneNumber" class="form-label">Phone Number</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control" placeholder="Enter your phone number" required>
+            </div>
+            <div class="mb-3">
+                <label for="whitePaper" class="form-label">Select Whitepaper</label>
+                <select id="whitePaper" name="whitePaper" class="form-select" required>
+                    <option value="">Choose...</option>
+                    <option value="assets/Oracle_Forms_to_Apex_White_Paper_v1_0.pdf">Oracle Forms to Apex</option>
+                    <option value="assets/Oracle forms to angular or react.pdf">Oracle Forms to Angular</option>
+                    <option value="assets/Oracle Forms to React Migration with XDO Framework.pdf">Oracle Forms to React</option>
+                </select>
+            </div>
+            <!-- Checkbox -->
+            <div class="form-check mb-4">
+                <input type="checkbox" id="stayUpdated" name="stayUpdated" class="form-check-input">
+                <label for="stayUpdated" class="form-check-label">
+                    Stay updated with cutting-edge industry solutions, expert insights, and product innovations tailored for technology leaders
+                </label>
+            </div>
+            <button type="button" id="downloadButton" class="btn btn-primary w-100">Download Whitepaper</button>
+        </form>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="customAlertModal" tabindex="-1" aria-labelledby="customAlertModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"></div>
+                <div class="modal-body" id="modalMessage"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-red center-btn" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        &copy; 2025 EchoApps360. All rights reserved.
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('downloadButton').addEventListener('click', function() {
+            const form = document.getElementById('whitepaperForm');
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const countryCode = document.getElementById('countryCode').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const whitePaper = document.getElementById('whitePaper').value;
+
+            if (firstName && lastName && email && countryCode && phoneNumber && whitePaper) {
+                let whitepaperName = '';
+                switch (whitePaper) {
+                    case 'assets/oracle forms to apex ':
+                        whitepaperName = 'Oracle Forms to Apex';
+                        break;
+                    case 'assets/Oracle forms to angular or react.pdf':
+                        whitepaperName = 'Oracle Forms to Angular';
+                        break;
+                    case 'assets/Oracle Forms to React Migration with XDO Framework.pdf':
+                        whitepaperName = 'Oracle Forms to React';
+                        break;
+                }
+
+                const modalMessage = document.getElementById('modalMessage');
+                modalMessage.textContent = `You have successfully downloaded the ${whitepaperName} whitepaper!`;
+
+                const customAlertModal = new bootstrap.Modal(document.getElementById('customAlertModal'));
+                customAlertModal.show();
+
+                const a = document.createElement('a');
+                a.href = whitePaper;
+                a.download = whitePaper.split('/').pop();
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            } else {
+                const modalMessage = document.getElementById('modalMessage');
+                modalMessage.textContent = 'Please fill out all required fields before downloading the whitepaper.';
+
+                const customAlertModal = new bootstrap.Modal(document.getElementById('customAlertModal'));
+                customAlertModal.show();
+            }
+        });
+    </script>
+</body>
+</html>
